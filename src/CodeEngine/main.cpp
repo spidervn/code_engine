@@ -3,7 +3,8 @@
 #include "inja.hpp"
 #include "nlohmann/json.hpp"
 #include <string>
-
+#include "c_engine/impl/toolkit/CStringToolkit.h"
+#include "c_engine/interface/toolkit/Console.h"
 using namespace std;
 using namespace inja;
 using json = nlohmann::json;
@@ -42,5 +43,12 @@ int main(int argc, char const *argv[])
 
     printf("%s\r\n", s1.c_str());
     printf("Code Engine\r\n");
+
+    CStringToolkit tk;
+    vector<string> v_token;
+    tk.split("-a-b--c-", "-", v_token);
+    
+    Console::log(v_token, ";");
+
     return 0;
 }
