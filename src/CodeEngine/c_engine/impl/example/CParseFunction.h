@@ -26,10 +26,11 @@ struct FunctionDS {
     std::vector<FunctionParameter> param_list;
 };
 
-class CParseFunction {
-public: 
-    virtual ~CParseFunction() {}
-    int parse_function(std::string text, FunctionDS& o);
+class CParseFunction 
+{
+    public: 
+        virtual ~CParseFunction() {}
+        int parse_function(std::string text, FunctionDS& o);
 };
 
 #endif // !CODEENGINE_CENGINE_IMPL_EXAMPLE_CPARSEFUNCTION_H_

@@ -12,7 +12,7 @@ using json = nlohmann::json;
 int example()
 {
     string s1;
-    json data;
+    nlohmann::json data;
     data["name"] = "world";
 
     s1 = inja::render("Hello {{ name }}!", data);
@@ -33,7 +33,8 @@ int example()
 int main(int argc, char const *argv[])
 {
     string s1;
-    json data;
+	
+	nlohmann::json data;
     data["name"] = "world";
 
     s1 = inja::render("Hello {{ name }}!", data);
