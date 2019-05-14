@@ -21,8 +21,14 @@ struct ParseResult
 {
     ElementType type;
     std::string content;
-};
 
+    std::vector<ParseResult> v_child;
+
+    int addChild(ParseResult a)
+    {
+        v_child.push_back(a);
+    }
+};
 
 int CParseFunction::parse_function(std::string text, FunctionDS& o)
 {
@@ -46,7 +52,9 @@ int CParseFunction::parse_function(std::string text, FunctionDS& o)
 
     // Data-structure? 
     // Matching 
-
+    // 
+    // Pushing==> into ==> 
+    // 
 
     // Find all continuous elements 
     int scanning_type;
