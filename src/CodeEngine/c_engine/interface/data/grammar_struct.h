@@ -2,6 +2,7 @@
 #define CODEENGINE_C_ENGINE_INTERFACE_DATA_GRAMMAR_STRUCT_H_
 
 #include <string>
+#include <vector>
 
 struct GrammarStruct
 {

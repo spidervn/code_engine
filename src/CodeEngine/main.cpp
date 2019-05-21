@@ -47,9 +47,17 @@ int main(int argc, char const *argv[])
 
     CStringToolkit tk;
     vector<string> v_token;
+	vector<string> v_token2;
+	vector<string> v_sep;
+
+	v_sep.push_back("-");
+	v_sep.push_back(";");
+	v_sep.push_back("h");
     tk.split("-a-b--c-", "-", v_token);
+	tk.split("-a-b-;-c-;h;", v_sep, v_token2);
+
     
     Console::log(v_token, ";");
-
+	Console::log(v_token2, "|");
     return 0;
 }
