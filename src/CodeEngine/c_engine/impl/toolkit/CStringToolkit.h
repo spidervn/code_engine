@@ -4,8 +4,11 @@
 #include "c_engine/interface/toolkit/IStringToolkit.h"
 #include <string>
 #include <vector>
+#include <memory>
 
-class CStringToolkit
+#define CStringToolkitPtrNew std::make_shared<CStringToolkit>()
+
+class CStringToolkit: public IStringToolkit
 {
 public:
     virtual ~CStringToolkit();
