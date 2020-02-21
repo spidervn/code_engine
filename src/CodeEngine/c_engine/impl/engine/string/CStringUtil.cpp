@@ -18,9 +18,10 @@ CStringUtil::~CStringUtil()
 int CStringUtil::toUpper(std::string input, std::string& output)
 {
     output.clear();
-    
-    std::for_each(std::begin(input), std::end(input), [](char& c) {
-        output.append(static_cast<char>(std::toupper(static_cast<unsigned char>(c))));
+    char x;
+
+    std::for_each(std::begin(input), std::end(input), [&output](char& c) {
+        char d = static_cast<char>(std::toupper(static_cast<unsigned char>(c)));
     });
     return 0;
 }
