@@ -64,6 +64,7 @@ std::string CCppGeneral::generateIfDefPragma(
     }
     catch (const filesystem_error& ex)
     {
+
     }
 
     // 
@@ -90,4 +91,63 @@ std::string CCppGeneral::generateIfDefPragma(
         cout << ex.what() << endl;
     }
 
+    // 
+    try
+    {
+        path fp(header_file);
+
+        cout << "Branch Path = " << fp.branch_path() << endl;
+        cout << "Parent Path = " << fp.parent_path() << endl;
+        cout << "Relative Path = " << fp.relative_path() << endl;
+        cout << "Filename = " <<  fp.filename() << endl;
+        cout << "Ext = " << fp.extension() << endl;
+    }
+    catch (const filesystem_error& e)
+    {
+        cout << e.what() << endl;
+    }
+
+    //
+    // Find Base-path 
+    // Recursively find base-path?
+    //  * Find base-path 
+    //  * 
+    // 
+
+    string vpath[100];
+    int n = 0;
+    int score = 0;
+
+    auto f = 0; // Lambda function
+    int fscore;
+    int max_score;
+    int trycount = 0;
+    int MAX_TRY = 10;
+    bool bReachRoot = false;
+
+    vpath[n++] = fp.parent_path().string(); // Push into stack
+    while (trycount < MAX_TRY && !bReachRoot)
+    {
+        string apath = vpath[--n];  // Pop from stack
+
+        path boostpath(apath);
+        path p2 = boostpath.concat("CMakeLists.txt");
+        int score = fscore; // With p2
+
+        if (score > max_score)
+        {
+            max_score = score;
+        }
+
+        // Finish when?
+        // Root directory 
+        // Or Limit Reached
+
+        trycount++;
+        bReachRoot = boostpath.parent_path().string() == apath;
+    }
+
+
+
+    return "";
 } 

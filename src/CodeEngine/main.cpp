@@ -5,6 +5,8 @@
 #include <string>
 #include "c_engine/impl/toolkit/CStringToolkit.h"
 #include "c_engine/interface/toolkit/Console.h"
+#include "c_engine/impl/engine/cpp/CCppGeneral.h"
+
 using namespace std;
 using namespace inja;
 using json = nlohmann::json;
@@ -60,5 +62,12 @@ int main(int argc, char const *argv[])
     
     Console::log(v_token, ";");
 	Console::log(v_token2, "|");
+
+    // 
+    // Cpp General
+    //
+    CCppGeneral cppg;
+    cppg.generateIfDefPragma("/home/ducvd/Android", "/home/ducvd/pgadmin.log");
+
     return 0;
 }

@@ -4,7 +4,7 @@
 #include "interface/engine/cpp/ICppGeneral.h"
 #include <string>
 
-class CCppGeneral
+class CCppGeneral: public ICppGeneral
 {
 private:
     /* data */
