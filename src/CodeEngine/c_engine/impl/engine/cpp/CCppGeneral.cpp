@@ -113,14 +113,21 @@ std::string CCppGeneral::generateIfDefPragma(
     // Find Base-path 
     // Recursively find base-path?
     //  * Find base-path 
-    //  * 
     // 
+    // @Output:
+    //  * O01: A list with:
+    //      a) Score 
+    //      b) Path
+    //
     int max_score = 0;
     int trycount = 0;
     int MAX_DEPTH = 10;
+    int MAX_RECORD = 4;
     bool bReachRoot = false;
     path enum_path = fp.parent_path();
     path project_base;
+
+    vector<std::pair<int, path>> v_record;
 
     while (trycount < MAX_DEPTH && !bReachRoot)
     {
@@ -141,10 +148,27 @@ std::string CCppGeneral::generateIfDefPragma(
             {
                 score = arr_mark[i] + (MAX_DEPTH - trycount)*3;   // MAX_DEPTH - trycount <=> Sooner is better
 
-                if (score > max_score)
+                int last_good_score = v_record.size() > 0 ? v_record[0].first : 0;
+                if (v_record.size() < MAX_RECORD || score > last_good_score)
                 {
-                    max_score = score;
-                    project_base = enum_path;
+                    std::pair<int, path> pp(score, enum_path);
+                    // max_score = score;
+                    // project_base = enum_path;
+
+                    // 1st entry that 
+                    int j = 0;
+                    while (j < v_record.size()) 
+                    { 
+                        if (v_record[j].first <= last_good_score) j++;
+                        else break; 
+                    }
+
+                    v_record.insert(v_record.begin() + j, pp);
+
+                    if (v_record.size() > MAX_RECORD)
+                    {
+                        v_record.erase(v_record.begin());
+                    }
                 }
             }
         }
@@ -154,14 +178,21 @@ std::string CCppGeneral::generateIfDefPragma(
         enum_path = enum_path.parent_path();
     }
 
-    if (max_score > 0)
+    if (v_record.size() > 0)
     {
-        cout << "Base Path = " << project_base << "(Score=" << max_score << ")" << endl;
-        cout << "\tFileName = " << project_base.filename() << endl;
+        for (int i=0; i<v_record.size(); ++i)
+        {
+            cout << "Record(" << i << ")" << endl;
+            cout << "\tBase Path = " << v_record[i].second << "(Score=" << v_record[i].first << ")" << endl;
+            cout << "\tFileName = " << v_record[i].second.filename() << endl;
+        }
+        // cout << "Base Path = " << project_base << "(Score=" << max_score << ")" << endl;
+        // cout << "\tFileName = " << project_base.filename() << endl;
     }
     else
     {
         cout << "Could not found" << endl;
     }
+
     return "";
 }
