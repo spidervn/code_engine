@@ -67,7 +67,7 @@ int main(int argc, char const *argv[])
     // Cpp General
     //
     CCppGeneral cppg;
-    cppg.generateIfDefPragma("/home/ducvd/Android", "/home/ducvd/pgadmin.log");
+    cppg.generateIfDefPragma("/home/ducvd/Android", "/home/ducvd/work/2020/github/code_engine/src/CodeEngine/c_engine/interface/engine/ICommandLineSuggestion.h");
 
     return 0;
 }

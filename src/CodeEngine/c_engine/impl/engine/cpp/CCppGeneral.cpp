@@ -113,41 +113,52 @@ std::string CCppGeneral::generateIfDefPragma(
     //  * Find base-path 
     //  * 
     // 
-
-    string vpath[100];
-    int n = 0;
-    int score = 0;
-
-    auto f = 0; // Lambda function
-    int fscore;
-    int max_score;
+    int max_score = 0;
     int trycount = 0;
-    int MAX_TRY = 10;
+    int MAX_DEPTH = 10;
     bool bReachRoot = false;
+    path enum_path = fp.parent_path();
+    path project_base;
 
-    vpath[n++] = fp.parent_path().string(); // Push into stack
-    while (trycount < MAX_TRY && !bReachRoot)
+    while (trycount < MAX_DEPTH && !bReachRoot)
     {
-        string apath = vpath[--n];  // Pop from stack
+        path path_cmake = enum_path; // path::concat(enum_path, "/CMakeLists.txt");
+        path path_main = enum_path; //.concat("/main.cpp");
 
-        path boostpath(apath);
-        path p2 = boostpath.concat("CMakeLists.txt");
-        int score = fscore; // With p2
+        path_cmake.concat("/CMakeLists.txt");
+        path_main.concat("/main.cpp");
+        path arr_path[2] = { path_cmake, path_main };
+        
+        int arr_mark[2] = { 8, 10 };
+        int score;
 
-        if (score > max_score)
+        for (int i=0; i<2; ++i)
         {
-            max_score = score;
+            cout << "Check: " << arr_path[i] << endl;
+            if (exists(arr_path[i]))
+            {
+                score = arr_mark[i] + (MAX_DEPTH - trycount)*3;   // MAX_DEPTH - trycount <=> Sooner is better
+
+                if (score > max_score)
+                {
+                    max_score = score;
+                    project_base = enum_path;
+                }
+            }
         }
-
-        // Finish when?
-        // Root directory 
-        // Or Limit Reached
-
+        
         trycount++;
-        bReachRoot = boostpath.parent_path().string() == apath;
+        bReachRoot = enum_path.parent_path().string() == enum_path.string();
+        enum_path = enum_path.parent_path();
     }
 
-
-
+    if (max_score > 0)
+    {
+        cout << "Base Path = " << project_base << "(Score=" << max_score << ")" << endl;
+    }
+    else
+    {
+        cout << "Could not found" << endl;
+    }
     return "";
-} 
+}
