@@ -19,8 +19,5 @@ std::string CCppClass::generate_HeaderFile(std::string projectCode,
     // Divides path into multiple parts
     // Header files 
     // 
-    
-
-
     return std::string("");
 }

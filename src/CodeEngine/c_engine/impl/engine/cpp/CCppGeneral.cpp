@@ -92,6 +92,8 @@ std::string CCppGeneral::generateIfDefPragma(
     }
 
     // 
+    // @Path
+    // 
     try
     {
         path fp(header_file);
@@ -155,6 +157,7 @@ std::string CCppGeneral::generateIfDefPragma(
     if (max_score > 0)
     {
         cout << "Base Path = " << project_base << "(Score=" << max_score << ")" << endl;
+        cout << "\tFileName = " << project_base.filename() << endl;
     }
     else
     {
