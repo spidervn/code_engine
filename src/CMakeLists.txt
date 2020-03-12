@@ -14,7 +14,8 @@ if(Boost_FOUND)
     file(GLOB SOURCES "CodeEngine/*.cpp"
                     "CodeEngine/c_engine/example/*.cpp"
                     "CodeEngine/c_engine/impl/toolkit/*.cpp"
-                    "CodeEngine/c_engine/impl/engine/cpp/*.cpp")
+                    "CodeEngine/c_engine/impl/engine/cpp/*.cpp"
+                    "CodeEngine/c_engine/impl/engine/string/*.cpp")
 
     add_executable( code_engine ${SOURCES} )
     target_link_libraries(code_engine ${Boost_LIBRARIES})

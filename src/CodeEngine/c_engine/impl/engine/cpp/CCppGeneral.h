@@ -8,6 +8,9 @@ class CCppGeneral: public ICppGeneral
 {
 private:
     /* data */
+protected:
+    void print_captures(const std::string& regx, const std::string& text);
+
 public:
     CCppGeneral(/* args */);
     virtual ~CCppGeneral();

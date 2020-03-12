@@ -1,5 +1,7 @@
 #include "CCppGeneral.h"
+#include "c_engine/impl/engine/string/CStringUtil.h"
 #include <boost/filesystem.hpp>
+#include <boost/regex.hpp>
 #include <iostream>
 
 using namespace std;
@@ -115,9 +117,8 @@ std::string CCppGeneral::generateIfDefPragma(
     //  * Find base-path 
     // 
     // @Output:
-    //  * O01: A list with:
-    //      a) Score 
-    //      b) Path
+    //  * O01: A candiate list
+    //      +) Ascending order 
     //
     int max_score = 0;
     int trycount = 0;
@@ -127,12 +128,14 @@ std::string CCppGeneral::generateIfDefPragma(
     path enum_path = fp.parent_path();
     path project_base;
 
+    IStringUtilPtr sup = CStringUtilPtrNew;
+
     vector<std::pair<int, path>> v_record;
 
     while (trycount < MAX_DEPTH && !bReachRoot)
     {
-        path path_cmake = enum_path; // path::concat(enum_path, "/CMakeLists.txt");
-        path path_main = enum_path; //.concat("/main.cpp");
+        path path_cmake = enum_path;    // path::concat(enum_path, "/CMakeLists.txt")
+        path path_main = enum_path;     // concat("/main.cpp")
 
         path_cmake.concat("/CMakeLists.txt");
         path_main.concat("/main.cpp");
@@ -143,7 +146,6 @@ std::string CCppGeneral::generateIfDefPragma(
 
         for (int i=0; i<2; ++i)
         {
-            cout << "Check: " << arr_path[i] << endl;
             if (exists(arr_path[i]))
             {
                 score = arr_mark[i] + (MAX_DEPTH - trycount)*3;   // MAX_DEPTH - trycount <=> Sooner is better
@@ -152,8 +154,6 @@ std::string CCppGeneral::generateIfDefPragma(
                 if (v_record.size() < MAX_RECORD || score > last_good_score)
                 {
                     std::pair<int, path> pp(score, enum_path);
-                    // max_score = score;
-                    // project_base = enum_path;
 
                     // 1st entry that 
                     int j = 0;
@@ -164,7 +164,6 @@ std::string CCppGeneral::generateIfDefPragma(
                     }
 
                     v_record.insert(v_record.begin() + j, pp);
-
                     if (v_record.size() > MAX_RECORD)
                     {
                         v_record.erase(v_record.begin());
@@ -185,6 +184,47 @@ std::string CCppGeneral::generateIfDefPragma(
             cout << "Record(" << i << ")" << endl;
             cout << "\tBase Path = " << v_record[i].second << "(Score=" << v_record[i].first << ")" << endl;
             cout << "\tFileName = " << v_record[i].second.filename() << endl;
+
+
+
+            //*** Generate Header 
+            string header_file_name = fp.filename().string();
+            string pragma_ID = "";
+            path header_path = fp; //.parent_path();
+            path project_path = v_record[i].second;
+
+            while (project_path != header_path)
+            {
+                printf("Here %s; %s\r\n", header_path.string().c_str(), header_path.filename().string().c_str());
+                string upper;
+                sup->toUpper( header_path.filename().string(), upper);
+
+                while (upper.find(".") != string::npos)
+                {
+                    upper.replace(upper.find("."), 1, "_");
+                }
+
+                while (upper.find(" ") != string::npos)
+                {
+                    upper.replace(upper.find(" "), 1, "_");
+                }
+
+                if (pragma_ID.empty())
+                {
+                    pragma_ID = upper;
+                }
+                else
+                {
+                    pragma_ID = upper + "_" + pragma_ID;
+                }
+
+                header_path = header_path.parent_path();
+            }
+
+            cout << "#ifndef " << pragma_ID << endl;
+            cout << "#define " << pragma_ID << endl;
+            cout << "\t// Code section" << endl;
+            cout << "#endif" << endl;
         }
         // cout << "Base Path = " << project_base << "(Score=" << max_score << ")" << endl;
         // cout << "\tFileName = " << project_base.filename() << endl;
@@ -194,5 +234,62 @@ std::string CCppGeneral::generateIfDefPragma(
         cout << "Could not found" << endl;
     }
 
+
+    // 
+    string wildcard = "*.cpp";
+    path p2(path_base);
+    boost::filesystem::directory_iterator end_itr;
+
+    /*
+    for (boost::filesystem::directory_iterator it(path_base); it!= end_itr; ++it)
+    {
+        if (is_regular_file(it->status()))
+        {
+            continue;
+
+
+        }
+    }
+    */
+
+   // boost::sma
+    boost::smatch what;
+    boost::regex_match()
+
     return "";
+}
+
+
+void print_captures(const std::string& regx, const std::string& text)
+{
+   boost::regex e(regx);
+   boost::smatch what;
+
+   std::cout << "Expression:  \"" << regx << "\"\n";
+   std::cout << "Text:        \"" << text << "\"\n";
+   if(boost::regex_match(text, what, e, boost::match_extra))
+   {
+      unsigned i, j;
+      std::cout << "** Match found **\n   Sub-Expressions:\n";
+      for(i = 0; i < what.size(); ++i)
+         std::cout << "      $" << i << " = \"" << what[i] << "\"\n";
+      std::cout << "   Captures:\n";
+      for(i = 0; i < what.size(); ++i)
+      {
+         std::cout << "      $" << i << " = {";
+         for(j = 0; j < what.captures(i).size(); ++j)
+         {
+            if(j)
+               std::cout << ", ";
+            else
+               std::cout << " ";
+            std::cout << "\"" << what.captures(i)[j] << "\"";
+         }
+         std::cout << " }\n";
+      }
+   }
+   else
+   {
+      std::cout << "** No Match found **\n";
+   }
 }
