@@ -254,7 +254,7 @@ std::string CCppGeneral::generateIfDefPragma(
 
    // boost::sma
     boost::smatch what;
-    boost::regex_match()
+    //boost::regex_match()
 
     return "";
 }
@@ -277,6 +277,7 @@ void print_captures(const std::string& regx, const std::string& text)
       for(i = 0; i < what.size(); ++i)
       {
          std::cout << "      $" << i << " = {";
+         /*
          for(j = 0; j < what.captures(i).size(); ++j)
          {
             if(j)
@@ -286,6 +287,7 @@ void print_captures(const std::string& regx, const std::string& text)
             std::cout << "\"" << what.captures(i)[j] << "\"";
          }
          std::cout << " }\n";
+         */
       }
    }
    else

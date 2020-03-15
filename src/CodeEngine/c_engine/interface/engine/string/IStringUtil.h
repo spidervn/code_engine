@@ -3,6 +3,7 @@
 
 #include <string>
 #include <memory>
+#include <vector>
 
 class IStringUtil
 {
@@ -14,6 +15,8 @@ public:
 
     /* Input; Output;  */
     // virtual int wildcard_find(std::string input, std::string wildcard) = 0;
+
+    virtual int split_sentence(std::string content, std::vector<std::string> vsentence) = 0;
 };
 
 typedef std::shared_ptr<IStringUtil> IStringUtilPtr;
