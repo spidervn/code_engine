@@ -18,6 +18,8 @@ public:
     std::string generateIfDefPragma(
         std::string path_base,
         std::string header_file);
+
+    int parseClassDef(std::string code, CppClassDef& def);
 };
 
 #endif

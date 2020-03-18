@@ -3,6 +3,7 @@
 #include <boost/filesystem.hpp>
 #include <boost/regex.hpp>
 #include <iostream>
+#include <regex>
 
 using namespace std;
 using namespace boost::filesystem;
@@ -253,9 +254,6 @@ std::string CCppGeneral::generateIfDefPragma(
     */
 
    // boost::sma
-    boost::smatch what;
-    boost::regex_match()
-
     return "";
 }
 
@@ -267,6 +265,7 @@ void print_captures(const std::string& regx, const std::string& text)
 
    std::cout << "Expression:  \"" << regx << "\"\n";
    std::cout << "Text:        \"" << text << "\"\n";
+
    if(boost::regex_match(text, what, e, boost::match_extra))
    {
       unsigned i, j;
@@ -277,6 +276,8 @@ void print_captures(const std::string& regx, const std::string& text)
       for(i = 0; i < what.size(); ++i)
       {
          std::cout << "      $" << i << " = {";
+         // @Temp comment
+         /*
          for(j = 0; j < what.captures(i).size(); ++j)
          {
             if(j)
@@ -285,6 +286,7 @@ void print_captures(const std::string& regx, const std::string& text)
                std::cout << " ";
             std::cout << "\"" << what.captures(i)[j] << "\"";
          }
+         */
          std::cout << " }\n";
       }
    }
@@ -292,4 +294,10 @@ void print_captures(const std::string& regx, const std::string& text)
    {
       std::cout << "** No Match found **\n";
    }
+}
+
+int CCppGeneral::parseClassDef(std::string code, CppClassDef& def)
+{
+    
+    return 0;
 }

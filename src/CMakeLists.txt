@@ -4,7 +4,6 @@ set (CMAKE_CXX_STANDARD 11)
 project( code_engine  )
 find_package(Boost 1.58 COMPONENTS filesystem)
 
-
 if(Boost_FOUND)
     include_directories(${Boost_INCLUDE_DIRS})
     include_directories(CodeEngine/)
