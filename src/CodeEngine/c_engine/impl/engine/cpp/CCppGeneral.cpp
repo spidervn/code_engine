@@ -298,6 +298,6 @@ void print_captures(const std::string& regx, const std::string& text)
 
 int CCppGeneral::parseClassDef(std::string code, CppClassDef& def)
 {
-    
+
     return 0;
 }

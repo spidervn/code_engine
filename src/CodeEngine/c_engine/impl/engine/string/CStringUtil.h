@@ -2,6 +2,8 @@
 #define CODEENGINE_C_ENGINE_INTERFACE_ENGINE_STRING_CSTRINGUTIL_H_
 
 #include <memory>
+#include <vector>
+#include <string>
 #include "interface/engine/string/IStringUtil.h"
 
 class CStringUtil: public IStringUtil
@@ -12,6 +14,8 @@ public:
     CStringUtil(/* args */);
     virtual ~CStringUtil();
     int toUpper(std::string, std::string&);
+
+    int split_sentence(std::string content, std::vector<std::string> vsentence);
 };
 
 #define CStringUtilPtrNew std::make_shared<CStringUtil>() 
