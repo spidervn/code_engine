@@ -29,7 +29,7 @@ struct CppClassDef
         vInheritance.clear();
     }
 
-
+    
 };
 
 

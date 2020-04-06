@@ -6,6 +6,8 @@
 #include "c_engine/impl/toolkit/CStringToolkit.h"
 #include "c_engine/interface/toolkit/Console.h"
 #include "c_engine/impl/engine/cpp/CCppGeneral.h"
+#include <iostream>
+#include <regex.h>
 
 using namespace std;
 using namespace inja;
@@ -68,6 +70,61 @@ int main(int argc, char const *argv[])
     //
     CCppGeneral cppg;
     cppg.generateIfDefPragma("/home/ducvd/Android", "/home/ducvd/work/2020/github/code_engine/src/CodeEngine/c_engine/interface/engine/ICommandLineSuggestion.h");
+
+    //
+    // Regular expression
+    //
+    const std::string str01 = "00:01";
+    const std::regex rg("\\d\\d:\\d\\d:\\d\\d");
+    const std::regex rg_typing("(\\d)?(\\d)?:\\d\\d:\\d\\d");
+    std::smatch base_match;
+
+    if (std::regex_match(str01, base_match, rg))
+    {
+        printf("Matched\r\n");
+    }
+    else
+    {
+        printf("UnMatched\r\n");
+    }
+
+    // 
+    // Regular expression for cpp class extraction
+    // 
+
+    std::string cpp_content;
+    // const std::regex rg_class("class([\\s]+)([a-zA-Z]+)([\\s]+){");
+    const std::regex rg_class("class[\\s]+([a-z]+)");
+    // const std::regex rg_class("\\w+");
+    ifstream filecpp("/home/ducvd/work/2020/github/stopwatchnc/src/StopwatchNC/interface/INcursesProgram.h");
+
+    if (filecpp.is_open())
+    {
+        printf("Open ifstream\r\n");
+        filecpp >> cpp_content;
+
+        cpp_content.assign(
+            (std::istreambuf_iterator<char>(filecpp)),
+            (std::istreambuf_iterator<char>())
+        );
+
+    }
+    else 
+    {
+        printf("Failed ifstream\r\n");
+    }
+    filecpp.close();
+
+    
+    auto rgcpp_begin = std::sregex_iterator(cpp_content.begin(), cpp_content.end(), rg_class);
+    auto rgcpp_end = std::sregex_iterator();
+
+    std::cout << "Class found " << std::distance(rgcpp_begin, rgcpp_end) << endl;
+    for (std::sregex_iterator i=rgcpp_begin; i != rgcpp_end; ++i)
+    {
+        std::smatch m = *i;
+        std::cout << m.str() << std::endl;
+    }
 
     return 0;
 }

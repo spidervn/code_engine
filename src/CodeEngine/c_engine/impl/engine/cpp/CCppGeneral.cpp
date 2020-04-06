@@ -3,7 +3,9 @@
 #include <boost/filesystem.hpp>
 #include <boost/regex.hpp>
 #include <iostream>
+#include <iterator>
 #include <regex>
+#include <string>
 
 using namespace std;
 using namespace boost::filesystem;
@@ -298,6 +300,27 @@ void print_captures(const std::string& regx, const std::string& text)
 
 int CCppGeneral::parseClassDef(std::string code, CppClassDef& def)
 {
+    def.vInheritance.size();
+
+    string s = "Some people, when confronted with a problem, think "
+        "\"I know, I'll use regular expressions.\" "
+        "Now they have two problems.";
+
+    regex self_regex("REGULAR EXPRESSION", 
+        std::regex_constants::ECMAScript | std::regex_constants::icase
+    );
+
+    if (std::regex_search(s, self_regex)) {
+        cout << "Text contains the phrase 'regular expression'\n";
+    }
+
+    regex word_regex("(\\w+)");
+    auto words_begin = sregex_iterator(s.begin(), s.end(), word_regex);
+    auto words_end = sregex_iterator();
+
+    cout << "Found " << std::distance(words_begin, words_end) << " words\n";
+
+    
 
     return 0;
 }
