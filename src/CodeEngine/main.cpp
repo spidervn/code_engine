@@ -93,8 +93,8 @@ int main(int argc, char const *argv[])
     // 
 
     std::string cpp_content;
-    // const std::regex rg_class("class([\\s]+)([a-zA-Z]+)([\\s]+){");
-    const std::regex rg_class("class[\\s]+([a-z]+)");
+    const std::regex rg_class("class([\\s]+)([a-zA-Z\\-\\_]+)([\\s]+)\\{([\\w\\W]*)\\}\\;");
+    // const std::regex rg_class("class[\\s]+([a-z]+)");
     // const std::regex rg_class("\\w+");
     ifstream filecpp("/home/ducvd/work/2020/github/stopwatchnc/src/StopwatchNC/interface/INcursesProgram.h");
 
@@ -115,7 +115,7 @@ int main(int argc, char const *argv[])
     }
     filecpp.close();
 
-    
+    // Found class
     auto rgcpp_begin = std::sregex_iterator(cpp_content.begin(), cpp_content.end(), rg_class);
     auto rgcpp_end = std::sregex_iterator();
 
@@ -123,7 +123,16 @@ int main(int argc, char const *argv[])
     for (std::sregex_iterator i=rgcpp_begin; i != rgcpp_end; ++i)
     {
         std::smatch m = *i;
-        std::cout << m.str() << std::endl;
+
+        std::cout << m.str() << " " <<  m.size() << std::endl;
+        std::cout << "\t";
+        for (int i=0; i<m.size();++i)
+        {
+            std::cout << m[i].str() << "; ";
+        }
+        std::cout << endl;
+        std::cout << "\tClass-name: " << m[2].str() << endl;
+        std::cout << "\tClass content: " << m[4].str() << endl;
     }
 
     return 0;

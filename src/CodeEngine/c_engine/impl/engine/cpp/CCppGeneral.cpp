@@ -319,8 +319,44 @@ int CCppGeneral::parseClassDef(std::string code, CppClassDef& def)
     auto words_end = sregex_iterator();
 
     cout << "Found " << std::distance(words_begin, words_end) << " words\n";
+   
+    return 0;
+}
 
-    
+int CCppGeneral::bracket_stack_parser(std::string class_content, int& open_bracket_pos, int& close_bracket_pos)
+{
+    int stack[1000];
+    int nstack = 0;
+    int open_bracket[1000];
+    int close_bracket[1000];
+    int nbracket = 0;
+
+    for (int i=0; i<class_content.length();++i)
+    {
+        if (class_content[i] == '{')
+        {
+            stack[nstack++] = i;
+        }
+
+        else if (class_content[i] == '}')
+        {
+            int start = stack[--nstack];
+
+            open_bracket[nbracket] = start;
+            close_bracket[nbracket++] = i;
+        }
+    }
+
+    if (nbracket > 0)
+    {
+        open_bracket_pos = open_bracket[0];
+        close_bracket_pos = close_bracket[0];
+    }
+    else 
+    {
+        open_bracket_pos = -1;
+        close_bracket_pos = -1;
+    }
 
     return 0;
 }
