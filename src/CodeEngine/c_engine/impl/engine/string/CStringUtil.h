@@ -16,6 +16,8 @@ public:
     int toUpper(std::string, std::string&);
 
     int split_sentence(std::string content, std::vector<std::string> vsentence);
+
+    int split_paragraph(std::string content, std::vector<std::string> vpara);
 };
 
 #define CStringUtilPtrNew std::make_shared<CStringUtil>() 

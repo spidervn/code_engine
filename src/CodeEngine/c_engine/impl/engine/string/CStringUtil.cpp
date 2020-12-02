@@ -68,3 +68,28 @@ int CStringUtil::split_sentence(std::string content, std::vector<std::string> vs
 
     return 0;
 }
+
+int CStringUtil::split_paragraph(std::string content, std::vector<std::string> vpara)
+{
+    // Do not use the paragraph 
+    // 
+    // Splitting: 
+    //  *) 
+    //  *) 
+    //  *) 
+
+    unsigned int i;
+    int apos[100];  // Stack of position
+                    // String is an Array 
+    int npos = 0;
+
+    for (i=0; i<content.length();++i)
+    {
+        if (content[i] == '\r' || content[i] == '\n')
+        {
+            apos[npos++] = i;   // Push to stack 
+        }
+    }
+
+    return 0;
+}
