@@ -20,6 +20,6 @@ public:
     int split_paragraph(std::string content, std::vector<std::string> vpara);
 };
 
-#define CStringUtilPtrNew std::make_shared<CStringUtil>() 
+#define CStringUtilPtrNew std::make_shared<CStringUtil>
 
 #endif

@@ -22,6 +22,8 @@ public:
     int parseClassDef(std::string code, CppClassDef& def);
 
     int bracket_stack_parser(std::string class_content, int& open_bracket_pos, int& close_bracket_pos);
+
+    int parse_header(std::string header_file, CppHeaderInfo& header);
 };
 
 #endif

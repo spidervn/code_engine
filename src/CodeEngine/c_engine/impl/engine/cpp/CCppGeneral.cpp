@@ -3,9 +3,11 @@
 #include <boost/filesystem.hpp>
 #include <boost/regex.hpp>
 #include <iostream>
+#include <istream>
 #include <iterator>
 #include <regex>
 #include <string>
+#include <sstream>
 
 using namespace std;
 using namespace boost::filesystem;
@@ -30,9 +32,9 @@ std::string CCppGeneral::generateIfDefPragma(
     // Recursively find Path-Base
     // 
     // Need Try/catch
-    
+    //
     // Check Filesize
-    long sz = file_size(header_file);
+    // long sz = file_size(header_file);
     
     // Check File existence
     path fp(header_file);
@@ -131,7 +133,7 @@ std::string CCppGeneral::generateIfDefPragma(
     path enum_path = fp.parent_path();
     path project_base;
 
-    IStringUtilPtr sup = CStringUtilPtrNew;
+    IStringUtilPtr sup = CStringUtilPtrNew();
 
     vector<std::pair<int, path>> v_record;
 
@@ -187,8 +189,6 @@ std::string CCppGeneral::generateIfDefPragma(
             cout << "Record(" << i << ")" << endl;
             cout << "\tBase Path = " << v_record[i].second << "(Score=" << v_record[i].first << ")" << endl;
             cout << "\tFileName = " << v_record[i].second.filename() << endl;
-
-
 
             //*** Generate Header 
             string header_file_name = fp.filename().string();
@@ -249,8 +249,6 @@ std::string CCppGeneral::generateIfDefPragma(
         if (is_regular_file(it->status()))
         {
             continue;
-
-
         }
     }
     */
@@ -357,6 +355,47 @@ int CCppGeneral::bracket_stack_parser(std::string class_content, int& open_brack
         open_bracket_pos = -1;
         close_bracket_pos = -1;
     }
+
+    return 0;
+}
+
+int CCppGeneral::parse_header(std::string header_file, CppHeaderInfo& header)
+{
+    std::ifstream infile(header_file);
+    std::string line;
+
+    // Parse Token Tree.
+    // Token? 
+    //      
+
+    vector<std::string> vtoken;
+    while (std::getline(infile, line))
+    {
+        // Parse Every Token 
+        // 1st 
+        // Split all token 
+
+        // 
+        // Split all token
+        // 
+
+        // Tree
+
+        // Using a tree? 
+        IStringUtilPtr sup = CStringUtilPtrNew();        
+        sup->split_sentence(line, vtoken);
+        sup->split_sentence(line, vtoken);
+        IStringUtilPtr sup1;
+
+        for (int i = 0; i<line.length(); ++i)
+        {
+            // 
+            char ch = line[i];
+            
+        }
+    }
+
+    infile.close();
 
     return 0;
 }

@@ -7,7 +7,7 @@
 #include "c_engine/interface/toolkit/Console.h"
 #include "c_engine/impl/engine/cpp/CCppGeneral.h"
 #include <iostream>
-#include <regex.h>
+#include <boost/regex.h>
 
 using namespace std;
 using namespace inja;

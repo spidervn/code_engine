@@ -22,12 +22,20 @@ if(TRUE) # Boost_FOUND
     file(GLOB MAINSKELETON "CodeEngine/c_engine/example/*.cpp"
                     "CodeEngine/c_engine/impl/toolkit/*.cpp"
                     "CodeEngine/c_engine/impl/engine/cpp/*.cpp"
-                    "CodeEngine/c_engine/impl/engine/string/*.cpp")
+                    "CodeEngine/c_engine/impl/engine/string/*.cpp"
+                    "CodeEngine/c_engine/impl/engine/system/*.cpp")
 
-    add_executable( code_engine CodeEngine/main.cpp ${MAINSKELETON} )
-    target_link_libraries(code_engine ${Boost_LIBRARIES})
+    add_library(libcodeengine STATIC ${MAINSKELETON})
 
-    add_executable( cpp_ifdef CodeEngine/c_engine/app/cpp/CppGenerateIfdef.cpp ${MAINSKELETON} )
-    target_link_libraries( cpp_ifdef ${Boost_LIBRARIES})
+    add_executable(code_engine CodeEngine/main.cpp)
+    target_link_libraries(code_engine ${Boost_LIBRARIES} libcodeengine)
+
+    # Application
+    add_executable(cpp_ifdef CodeEngine/c_engine/app/cpp/CppGenerateIfdef.cpp)
+    target_link_libraries(cpp_ifdef ${Boost_LIBRARIES} libcodeengine)
+
+    # Testing
+    add_executable(test_system CodeEngine/c_engine/app/test/system/TestFileSystem.cpp)
+    target_link_libraries(test_system ${Boost_LIBRARIES} libcodeengine)    
 endif()
 
