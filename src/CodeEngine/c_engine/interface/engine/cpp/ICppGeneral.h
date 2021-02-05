@@ -6,6 +6,17 @@
 #include <vector>
 #include <tuple>
 
+enum StructType {
+    STRUCT,
+    CLASS
+};
+
+struct ClassInfo {
+    StructType type;
+    std::string name;               // class name
+    std::vector<std::string> ns;    // namespace
+};
+
 struct CppHeaderInfo {
     std::vector<std::tuple<int, int>> ls_ifdef; 
     std::vector<std::string> ls_include;
