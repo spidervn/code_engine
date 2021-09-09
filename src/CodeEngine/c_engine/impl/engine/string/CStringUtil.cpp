@@ -93,3 +93,17 @@ int CStringUtil::split_paragraph(std::string content, std::vector<std::string> v
 
     return 0;
 }
+
+bool CStringUtil::ends_width(const std::wstring& wstr, const std::wstring& suffix)
+{
+	int r1 = wstr.length() - 1;
+	int r2 = suffix.length() - 1;
+
+	while (r1 >= 0 && r2 >= 0 && wstr[r1] == suffix[r2])
+	{
+		r1--;
+		r2--;
+	}
+
+	return r2 < 0;
+}

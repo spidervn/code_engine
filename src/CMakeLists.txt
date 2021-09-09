@@ -19,7 +19,7 @@ if(TRUE) # Boost_FOUND
     include_directories(lib/inja-master/src/)
     link_directories(${Boost_LIBRARY_DIRS})
 
-    file(GLOB MAINSKELETON "CodeEngine/c_engine/example/*.cpp"
+    file(GLOB MAINSKELETON "CodeEngine/c_engine/impl/example/*.cpp"
                     "CodeEngine/c_engine/impl/toolkit/*.cpp"
                     "CodeEngine/c_engine/impl/engine/cpp/*.cpp"
                     "CodeEngine/c_engine/impl/engine/string/*.cpp"

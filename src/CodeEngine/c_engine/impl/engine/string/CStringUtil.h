@@ -18,6 +18,9 @@ public:
     int split_sentence(std::string content, std::vector<std::string> vsentence);
 
     int split_paragraph(std::string content, std::vector<std::string> vpara);
+
+
+	static bool ends_width(const std::wstring& wstr, const std::wstring& suffix);
 };
 
 #define CStringUtilPtrNew std::make_shared<CStringUtil>
