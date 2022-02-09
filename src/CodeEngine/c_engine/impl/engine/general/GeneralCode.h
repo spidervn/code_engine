@@ -26,6 +26,11 @@ public:
 
     bool isNormalCharacter(char ch);
     bool isQuotedCharacter(char ch);
+
+    int fuzzy_VB6_method_list(std::string code);
+
+
+    double prob_IsVB6Method(std::string block);
 };
 
 

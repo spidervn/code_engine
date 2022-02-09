@@ -8,6 +8,19 @@
 
 using namespace std;
 
+int parseHeader()
+{
+   char arr[100];
+   // Find Ifndef/Endif
+
+   std::string strFile;
+   int n = strFile.length();
+
+   // find strFile 
+
+   return 0;
+}
+
 int main(int argc, char const *argv[])
 {
     /* code */

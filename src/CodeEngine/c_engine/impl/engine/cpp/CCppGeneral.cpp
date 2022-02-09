@@ -380,7 +380,6 @@ int CCppGeneral::parse_header(std::string header_file, CppHeaderInfo& header)
         // 
 
         // Tree
-
         // Using a tree? 
         IStringUtilPtr sup = CStringUtilPtrNew();        
         sup->split_sentence(line, vtoken);
@@ -389,13 +388,10 @@ int CCppGeneral::parse_header(std::string header_file, CppHeaderInfo& header)
 
         for (int i = 0; i<line.length(); ++i)
         {
-            // 
-            char ch = line[i];
-            
+            char ch = line[i];   
         }
     }
 
     infile.close();
-
     return 0;
 }

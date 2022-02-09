@@ -107,3 +107,69 @@ bool CStringUtil::ends_width(const std::wstring& wstr, const std::wstring& suffi
 
 	return r2 < 0;
 }
+
+int CStringUtil::fuzzy_find(std::string wholecontent, std::string strfind)
+{
+    throw "UnImplemented";
+    return 0;
+}
+
+int CStringUtil::distance(std::string str1, std::string str2)
+{
+    int l1 = str1.length();
+    int l2 = str2.length();
+    int* d = (int*) malloc(sizeof(int) * l1*l2);    // Matrix 
+                                                    // distance(x,y) = d[x*l1+y]
+    if (d)
+    {
+        /*
+            l1xl2
+            <-----l1---->
+            [0,0,...,0,0]   ^
+            [0,0,...,0,0]   |
+            ...             l2
+            [0,0,...,0,0]   |
+            [0,0,...,0,0]   v
+
+            distance[0,y] = 0   // y=0..l2-1
+            distance[x,0] = 0   // x=0..l1-1
+            distance[x,y] = max(
+                                d[x-1,y],
+                                d[x,y-1],
+                                d[x-1,y-1] + equals(str1[x], str2[y]))
+         */
+
+        for (int y=0;y<l2;++y)
+        {
+            d[y] = 0;
+        }
+
+        for (int x=1;x<l1;++x)  // Pass the x=0 step; since the above command has updated it.
+        {
+            d[x*l1] = 0;
+        }
+
+        for (int x=1;x<l1;++x)
+        {
+            for (int y=1;y<l2;++y)
+            {
+                int max = d[(x-1)*l1+y];
+                if (max < d[x*l1 + y-1])
+                {
+                    max = d[x*l1 + y-1];
+                }
+
+                int equals = str1[x] == str2[y] ? 1 : 0;
+                if (max < d[(x-1)*l1 + y-1] + equals)
+                {
+                    max = d[(x-1)*l1 + y-1] + equals;
+                }
+            }
+        }
+    }
+    else 
+    {
+        throw "Invalid memory";
+    }
+    return 0;
+}

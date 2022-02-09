@@ -21,7 +21,9 @@ public:
     virtual int split_paragraph(std::string content, std::vector<std::string> vpara) = 0;
 
     // virtual int find_in_directory(std::string strfind, std::string directory_path, std::vector<std::string> v_include_filter, std::vector<std::string> v_exclude_filter) = 0;
+    virtual int distance(std::string str1, std::string str2) = 0;
 
+    
 };
 
 typedef std::shared_ptr<IStringUtil> IStringUtilPtr;

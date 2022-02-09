@@ -19,8 +19,11 @@ public:
 
     int split_paragraph(std::string content, std::vector<std::string> vpara);
 
-
 	static bool ends_width(const std::wstring& wstr, const std::wstring& suffix);
+
+    int fuzzy_find(std::string wholecontent, std::string strfind);
+
+    int distance(std::string str1, std::string str2);    
 };
 
 #define CStringUtilPtrNew std::make_shared<CStringUtil>

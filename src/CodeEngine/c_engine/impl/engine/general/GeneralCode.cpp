@@ -21,8 +21,23 @@ int GeneralCode::parseIfThenBlock_VB6(std::string code)
     
     int state = STT_FINDNEXT;
 
+    int token_type; // =1 Text Token
+                    // =2 Quoted Token
+                    // =3 Group Token
+                    // 
     std::string token; // Current Token
 
+    /*
+     * State Machine
+     *      FINDNEXT
+     *          ---(input=NormalCharacter)---> CONTENT_SCANNING
+     *          ---(input=QuotedCharacter)---> 
+     * 
+     *      CONTENT_SCANNING
+     *          ---(input=NormalCharacter)---> CONTENT_SCANNING
+     *          ---(input=QuotedCharacter)---> BEGINQUOTE
+     * 
+     */
     for (int i=0; i<code.length();++i)
     {
         if (state == STT_FINDNEXT)
@@ -30,17 +45,46 @@ int GeneralCode::parseIfThenBlock_VB6(std::string code)
             if (isNormalCharacter(code[i]))
             {
                 token = code[i];
+                state = STT_CONTENT_SCANNING;   
+            }
+            else if (isQuotedCharacter(code[i]))
+            {
+                token = code[i];
+                state = STT_CONTENT_SCANNING;
             }
         }
         else if (state == STT_CONTENT_SCANNING)
         {
-
+            if (isNormalCharacter(code[i]))
+            {
+                token += code[i];
+                state = STT_CONTENT_SCANNING;
+            }
+            
+        }
+        else if (state == STT_CONTENT_SCANNING)
+        {
         }
     }
+    return 0;
+}
 
+int GeneralCode::fuzzy_VB6_method_list(std::string code)
+{
+    // Probability of Data is Method=?
+    // Display the highest probability which value > threshold.
+    
+    // 
+    // P(codepices = ? |code) = ? 
+    // 
+    return true;
+}
+
+double GeneralCode::prob_IsVB6Method(std::string block)
+{
     
 
-    return 0;
+    return 1.0;
 }
 
 bool GeneralCode::isNormalCharacter(char ch)
